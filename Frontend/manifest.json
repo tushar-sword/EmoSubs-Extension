@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "EmoSubs",
+  "version": "0.1.0",
+  "description": "Enhances Disney+ Hotstar subtitles with emotion-aware AI rewriting.",
+  "permissions": ["activeTab"],
+  "host_permissions": [
+    "https://www.hotstar.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.hotstar.com/*"],
+      "js": ["Content.js"],
+      "css": ["Substyles.css"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html"
+  }
+}
