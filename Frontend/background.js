@@ -1,6 +1,6 @@
 console.log("[EmoSubs] Background loaded");
 
-const BACKEND_URL = "http://localhost:6002/api/enhance"; 
+const BACKEND_URL = "https://emosubs-extension.onrender.com/api/enhance"; 
 
 let targetLanguage = null;
 let enabled = false;
