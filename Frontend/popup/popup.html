@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EmoSubs</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>EmoSubs</h1>
+    </div>
+
+    <p class="subtitle">
+      Emotion-aware subtitles in your language
+    </p>
+
+    <label for="languageSelect">Translate subtitles to</label>
+    <select id="languageSelect"></select>
+
+    <!-- ON / OFF toggle -->
+    <div class="toggle-row">
+      <span>Enable EmoSubs</span>
+      <input type="checkbox" id="toggleSwitch" disabled />
+    </div>
+
+    <div class="status" id="statusText">
+      Select a language to enable
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
