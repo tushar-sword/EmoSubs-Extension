@@ -1,6 +1,6 @@
 console.log("[EmoSubs] Background loaded");
 
-const BACKEND_URL = "http://localhost:6002/api/enhance"; // ✅ Fixed port to 6002
+const BACKEND_URL = "http://localhost:6002/api/enhance"; 
 
 let targetLanguage = null;
 let enabled = false;
@@ -16,27 +16,27 @@ chrome.storage.sync.get(
   }
 );
 
-// Listen for messages from popup and content script
+// Listening for messages from popup and content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
-  // Handle language change from popup
+  // handle language 
   if (message.type === "SET_LANGUAGE") {
     targetLanguage = message.language;
     console.log("[EmoSubs] Language set:", targetLanguage);
     return;
   }
 
-  // Handle enable/disable from popup
+  //handle enable/disable
   if (message.type === "SET_ENABLED") {
     enabled = message.enabled;
     console.log("[EmoSubs] Enabled:", enabled);
     return;
   }
 
-  // Handle subtitle capture from content script
+
   if (message.type === "SUBTITLE_CAPTURED") {
 
-    // Check if extension is enabled and language is set
+    // extension is enabled and language is set
     if (!enabled || !targetLanguage) {
       console.log("[EmoSubs] Ignored subtitle (disabled or no language selected)");
       return;
@@ -76,13 +76,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           return;
         }
 
-        // Send enhanced subtitle back to content script
+        // enhanced subtitle back to content script
         chrome.tabs.sendMessage(tabId, {
           type: "ENHANCED_SUBTITLE",
           text: data.enhancedText
         });
 
-        console.log("[EmoSubs] ✅ Sent enhanced subtitle to tab");
+        console.log("[EmoSubs] Sent enhanced subtitle to tab");
       })
       .catch(err => {
         console.error("[EmoSubs] Backend error:", err);
@@ -94,7 +94,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         });
       });
     
-    // Return true to indicate async response
+    // true return to indicate async response
     return true;
   }
 });

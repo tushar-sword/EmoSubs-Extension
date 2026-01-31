@@ -1,4 +1,4 @@
-// EmoSubs – Content Script - Optimized for visibility control
+// EmoSubs – Content Script 
 console.log("[EmoSubs] Content script loaded on:", window.location.href);
 
 let lastSubtitleText = "";
@@ -6,9 +6,7 @@ let lastProcessedTime = 0;
 let customSubtitleBox = null;
 let subtitleCheckInterval = null;
 
-/**
- * Create custom subtitle overlay
- */
+// create custom subtitlw overlay
 function createSubtitleBox() {
   if (customSubtitleBox) return customSubtitleBox;
 
@@ -23,11 +21,10 @@ function createSubtitleBox() {
   return customSubtitleBox;
 }
 
-/**
- * Get current subtitle text from Hotstar
- */
+
+ // Getting current subtitle text from Hotstar
 function getCurrentSubtitleText() {
-  // Try multiple selectors in priority order
+  // multiple selectors
   const selectors = [
     '.shaka-text-container span',
     '.subtitle-container span',
@@ -40,7 +37,6 @@ function getCurrentSubtitleText() {
     if (spans.length > 0) {
       let fullText = "";
       spans.forEach(span => {
-        // Read text even if it's styled hidden
         if (span.innerText) {
           fullText += span.innerText.trim() + " ";
         }
@@ -56,9 +52,8 @@ function getCurrentSubtitleText() {
   return "";
 }
 
-/**
- * Hide original Hotstar subtitles - make invisible but keep in DOM
- */
+// Hide original Hotstar subtitles - make invisible but keep in DOM
+
 function hideOriginalSubtitles() {
   const containers = document.querySelectorAll('.shaka-text-container, .subtitle-container, .cues-container');
   
@@ -73,13 +68,10 @@ function hideOriginalSubtitles() {
   });
 }
 
-/**
- * Process new subtitle
- */
+// Process new subtitle
 function processSubtitle(text) {
   const now = Date.now();
   
-  // Skip if same text within 300ms (debounce)
   if (text === lastSubtitleText && (now - lastProcessedTime) < 300) {
     return;
   }
@@ -108,9 +100,7 @@ function processSubtitle(text) {
   });
 }
 
-/**
- * Check for subtitle changes (called every 250ms)
- */
+// Check for subtitle changes (called every 250ms)
 function checkSubtitles() {
   const currentText = getCurrentSubtitleText();
 
@@ -134,9 +124,7 @@ function checkSubtitles() {
   }
 }
 
-/**
- * Start monitoring subtitles
- */
+// Start monitoring subtitles
 function startMonitoring() {
   console.log("[EmoSubs] 🚀 Starting subtitle monitoring...");
 
@@ -156,7 +144,7 @@ function startMonitoring() {
 
   // Also use mutation observer as backup
   const observer = new MutationObserver(() => {
-    hideOriginalSubtitles(); // Hide on DOM change
+    hideOriginalSubtitles(); 
     checkSubtitles();
   });
 
@@ -169,9 +157,7 @@ function startMonitoring() {
   console.log("[EmoSubs] ✅ Monitoring active");
 }
 
-/**
- * Receive enhanced subtitle from background
- */
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "ENHANCED_SUBTITLE") {
     console.log("[EmoSubs] 📥 Received ENHANCED:", message.text);
@@ -193,7 +179,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", startMonitoring);
 } else {
-  // Already loaded
   setTimeout(startMonitoring, 1000);
 }
 

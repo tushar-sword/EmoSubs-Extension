@@ -5,14 +5,12 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-/* ---------------- OUTPUT SCHEMA ---------------- */
-
+//Output ScHema
 const SubtitleOutputSchema = z.object({
   enhancedText: z.string()
 });
 
-/* ---------------- SYSTEM PROMPT ---------------- */
-
+//Mr Prompt
 const SUBTITLE_SYSTEM_PROMPT = `
 You are an AI that rewrites subtitles for movies and TV shows.
 
@@ -43,8 +41,7 @@ CRITICAL: Return your response as JSON with this exact structure:
 }
 `;
 
-/* ---------------- MAIN FUNCTION ---------------- */
-
+//main function
 export async function enhanceSubtitle(text, targetLang = "en") {
   try {
     const messages = [
@@ -82,7 +79,7 @@ Rewrite the subtitle following all rules. Return ONLY valid JSON.
 
   } catch (error) {
     console.error("[aiService] Error:", error);
-    // Safe fallback: original text
+    // Safe fallback = original text
     return text;
   }
 }
